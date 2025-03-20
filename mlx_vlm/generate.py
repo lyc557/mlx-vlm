@@ -1,5 +1,6 @@
 import argparse
 import codecs
+import os
 
 from .prompt_utils import apply_chat_template
 from .utils import (
@@ -29,6 +30,19 @@ def parse_arguments():
         type=str,
         default=DEFAULT_MODEL_PATH,
         help="The path to the local model directory or Hugging Face repo.",
+    )
+    # 添加代理相关参数
+    parser.add_argument(
+        "--proxy",
+        type=str,
+        default=None,
+        help="Proxy URL for downloading models (e.g., http://127.0.0.1:7890)",
+    )
+    parser.add_argument(
+        "--local-model-path",
+        type=str,
+        default=None,
+        help="Path to local model directory (bypasses Hugging Face download)",
     )
     parser.add_argument(
         "--adapter-path",
@@ -80,8 +94,19 @@ def parse_arguments():
     return parser.parse_args()
 
 
-def get_model_and_processors(model_path, adapter_path):
-    model_path = get_model_path(model_path)
+def get_model_and_processors(model_path, adapter_path, proxy=None, local_model_path=None):
+    # 如果提供了本地模型路径，直接使用
+    if local_model_path:
+        model_path = local_model_path
+    else:
+        # 设置代理环境变量
+        if proxy:
+            os.environ["HTTP_PROXY"] = proxy
+            os.environ["HTTPS_PROXY"] = proxy
+            print(f"使用代理: {proxy}")
+        
+        model_path = get_model_path(model_path)
+    
     config = load_config(model_path, trust_remote_code=True)
     model, processor = load(
         model_path, adapter_path=adapter_path, lazy=False, trust_remote_code=True
@@ -94,7 +119,12 @@ def main():
     if isinstance(args.image, str):
         args.image = [args.image]
 
-    model, processor, config = get_model_and_processors(args.model, args.adapter_path)
+    model, processor, config = get_model_and_processors(
+        args.model, 
+        args.adapter_path,
+        proxy=args.proxy,
+        local_model_path=args.local_model_path
+    )
 
     prompt = codecs.decode(args.prompt, "unicode_escape")
 

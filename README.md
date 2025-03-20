@@ -4,15 +4,24 @@
 MLX-VLM is a package for inference and fine-tuning of Vision Language Models (VLMs) on your Mac using MLX.
 
 ## Table of Contents
-- [Installation](#installation)
-- [Usage](#usage)
-  - [Command Line Interface (CLI)](#command-line-interface-cli)
-  - [Chat UI with Gradio](#chat-ui-with-gradio)
-  - [Python Script](#python-script)
-- [Multi-Image Chat Support](#multi-image-chat-support)
-  - [Supported Models](#supported-models)
-  - [Usage Examples](#usage-examples)
+- [MLX-VLM](#mlx-vlm)
+  - [Table of Contents](#table-of-contents)
+  - [Installation](#installation)
+  - [Usage](#usage)
+    - [Command Line Interface (CLI)](#command-line-interface-cli)
+    - [Chat UI with Gradio](#chat-ui-with-gradio)
+    - [Python Script](#python-script)
+  - [Multi-Image Chat Support](#multi-image-chat-support)
+    - [Supported Models](#supported-models)
+    - [Usage Examples](#usage-examples)
+      - [Python Script](#python-script-1)
+      - [Command Line](#command-line)
+  - [Video Understanding](#video-understanding)
+    - [Supported Models](#supported-models-1)
+    - [Usage Examples](#usage-examples-1)
+      - [Command Line](#command-line-1)
 - [Fine-tuning](#fine-tuning)
+  - [LoRA \& QLoRA](#lora--qlora)
 
 ## Installation
 
@@ -30,6 +39,19 @@ Generate output from a model using the CLI:
 
 ```sh
 python -m mlx_vlm.generate --model mlx-community/Qwen2-VL-2B-Instruct-4bit --max-tokens 100 --temp 0.0 --image http://images.cocodataset.org/val2017/000000039769.jpg
+```
+
+
+使用代理下载模型：
+```sh
+python -m mlx_vlm.generate --model mlx-community/Qwen2-VL-2B-Instruct-4bit --max-tokens 100 --temp 0.0 --image http://images.cocodataset.org/val2017/000000039769.jpg --proxy http://127.0.0.1:7890
+```
+或者，如果您已经下载了模型到本地，可以直接指定本地路径：
+```sh
+python -m mlx_vlm.generate --local-model-path /Users/yangcailu/models/Qwen2-VL-2B-Instruct-4bit --image h```
+或者，如果您已经下载了模型到本地，可以直接指定本地路径：
+```sh
+python -m mlx_vlm.generate --local-model-path /Users/yangcailu/models/Qwen2-VL-2B-Instruct-4bit --image URL_ADDRESS.cocodataset.org/val2017/000000039769.jpg
 ```
 
 ### Chat UI with Gradio
