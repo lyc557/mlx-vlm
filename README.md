@@ -54,7 +54,14 @@ python -m mlx_vlm.generate --local-model-path /Users/yangcailu/models/Qwen2-VL-2
 ```sh
 python -m mlx_vlm.generate --local-model-path /Users/yangcailu/models/Qwen2-VL-2B-Instruct-4bit --image URL_ADDRESS.cocodataset.org/val2017/000000039769.jpg
 ```
+```sh
 
+vllm serve NousResearch/Meta-Llama-3-8B-Instruct --dtype auto --api-key token-abc123
+
+curl -X POST http://localhost:8000/v1/completions \
+  -H "Content-Type: application/json" \
+  -d '{"model": "NousResearch/Meta-Llama-3-8B-Instruct", "prompt": "Hello, world!", "max_tokens": 100}'
+```
 ### Chat UI with Gradio
 
 Launch a chat interface using Gradio:
