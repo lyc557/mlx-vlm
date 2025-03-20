@@ -48,7 +48,8 @@ python -m mlx_vlm.generate --model mlx-community/Qwen2-VL-2B-Instruct-4bit --max
 ```
 或者，如果您已经下载了模型到本地，可以直接指定本地路径：
 ```sh
-python -m mlx_vlm.generate --local-model-path /Users/yangcailu/models/Qwen2-VL-2B-Instruct-4bit --image h```
+python -m mlx_vlm.generate --local-model-path /Users/yangcailu/models/Qwen2-VL-2B-Instruct-4bit --image h
+```
 或者，如果您已经下载了模型到本地，可以直接指定本地路径：
 ```sh
 python -m mlx_vlm.generate --local-model-path /Users/yangcailu/models/Qwen2-VL-2B-Instruct-4bit --image URL_ADDRESS.cocodataset.org/val2017/000000039769.jpg
